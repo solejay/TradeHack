@@ -6,24 +6,24 @@ import com.mongodb.casbah.MongoConnection
 import com.novus.salat.global._
 import com.novus.salat.dao.SalatDAO
 
-case class Constants (commodityName:String,
-		importersUlc:Option[Float],
-		population:Option[Float],
-		openess:Option[Float],
-		fxRating:Option[Float],
-		outPutGap:Option[Float],
-		ownTFP:Option[Float],
-		ownUlc:Option[Float],
-		oil:Option[Float],
-		lcpi:Option[Float],
-		stocks:Option[Float],
-		reer:Option[Float],
-		rpdi:Option[Float],
-		commodityId:Option[ObjectId],
- 	id:ObjectId = new ObjectId) 
+case class Constants(
+  commodityName: String,
+  importersUlc: Option[Float],
+  population: Option[Float],
+  openess: Option[Float],
+  fxRating: Option[Float],
+  outPutGap: Option[Float],
+  ownTFP: Option[Float],
+  ownUlc: Option[Float],
+  oil: Option[Float],
+  lcpi: Option[Float],
+  stocks: Option[Float],
+  reer: Option[Float],
+  rpdi: Option[Float],
+  commodityId: Option[ObjectId],
+  id: ObjectId = new ObjectId)
 
-object Constants extends SalatDAO[Country,ObjectId](
+object Constants extends SalatDAO[Country, ObjectId](
   collection = MongoConnection()("tradehack")("constants")) {
-  
-  
+
 }
