@@ -19,7 +19,7 @@ case class Constants (commodityName:String,
 		stocks:Option[Float],
 		reer:Option[Float],
 		rpdi:Option[Float],
-		commodityId:Option[ObjectiD]
+		commodityId:Option[ObjectId],
  	id:ObjectId = new ObjectId) 
 
 object Constants extends SalatDAO[Country,ObjectId](
