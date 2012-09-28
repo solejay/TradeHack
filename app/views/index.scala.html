@@ -1,7 +1,120 @@
-@(message: String)
-
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message)
-    
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")" />
+<style type="text/css">
+body {
+	margin-top: 40px;
 }
+input[type=text] {
+	height: 30px;
+}
+</style>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/ticker.js")"></script>
+<script type="text/javascript">
+$(function() {
+  $('.ticker').each(function() {
+    var tc = $(this);
+    var ticker = new Ticker({max: 5, value: 2, min: 2, step: 0.05});
+    var input = tc.find('input[name=value]');
+    input.val(ticker.value());
+    var upBtn = tc.find('button.up-btn');
+    var downBtn = tc.find('button.down-btn');
+
+   	upBtn.on('click', function() {
+      input.val(ticker.increment());
+    });
+
+    downBtn.on('click', function() {
+      input.val(ticker.decrement());
+    });
+
+    input.on('keyup', function(e) {
+
+      try {
+        var value = parseFloat(input.val());
+
+        if (ticker.withinRange(value)) {
+          ticker.setValue(parseFloat(value));
+        } else {
+          input.val(ticker.value());
+        }
+      } catch (e) {
+        e.preventDefault();
+        input.val(ticker.value());
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="span12">
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+				<div class="ticker input-prepend input-append">
+					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
+					<input type="text" name="value" class="input-mini" />
+					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
