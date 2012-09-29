@@ -1,170 +1,403 @@
-<html>
-<head>
-<title></title>
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")" />
-<style type="text/css">
-body {
-	margin-top: 40px;
-}
-input[type=text] {
-	height: 30px;
-}
-</style>
-<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
-<script type="text/javascript" src="@routes.Assets.at("javascripts/ticker.js")"></script>
-<script type="text/javascript">
-$(function() {
-  //define the comodities or pull from an external source.
-  var comodities = {
-    rice: {
-      name: 'Rice',
-      importersULC: {
-        name: 'Importers ULC',
-      	constant: 0.93,
-      	value: 2.55
-      }
-    }
-  };
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>trd hckr.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-  $('.ticker').each(function() {
-    // retrieve an instance of the current ticker.
-    var tc = $(this);
+    <!-- styles -->
+    <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@routes.Assets.at("stylesheets/anythingslider.css")" rel="stylesheet" />
+    <link href="/assets/stylesheets/style.css" rel="stylesheet" />
 
-    // retrieve the key to be used in associating a Ticker with it's Comodity model factor.
-    var factorKey = tc.data('factor');
-    // retrieve the associated comodity.
-    var comodity = comodities[factorKey];
-    // update the comodity's name label on the UI.
-    tc.find('span.factor-name').html(comodity.name);
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.anythingslider.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/app.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/comodity-data.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/ticker.js")"></script>
 
-    var ticker = new Ticker({max: 5, value: comodity.value, min: 2, step: 0.05});
-    var input = tc.find('input[name=value]');
-    input.val(ticker.value());
-    var upBtn = tc.find('button.up-btn');
-    var downBtn = tc.find('button.down-btn');
+    <script type="text/javascript">
+		$(function() {
+		  function recalculate(priceField) {
+		    for (var tickerName in tickers) {
+		      var ticker = tickers[tickerName];
+		      currentComodity.options[tickerName].value = ticker.value();
+		    }
+		    // calculate the price of the currently selected comodity.
+		    var price = currentComodity.calculatePrice();
 
-   	upBtn.on('click', function(e) {
-      input.val(ticker.increment());
-      
-    });
+		    var dataInfo = $('li[data-info=' + currentComodity.options.key + ']');
+		    dataInfo.find('span.price').html(price);
+		    dataInfo.find('h2.title').html(currentComodity.options.name);
+		    dataInfo.find('p.description').html(currentComodity.options.desc);
+		  }
+		  
+		  // updates the current comodity's constant values.
+		  function updateComodity(comodity) {
+		    if (comodity) {
+			    var currentOptions = currentComodity.options;
+			    currentOptions.name = comodity.options.name;
+			    currentOptions.desc = comodity.options.desc;
+			    currentOptions.key = comodity.options.key;
+			    currentOptions.coefficient = comodity.options.coefficient;
 
-    downBtn.on('click', function() {
-      input.val(ticker.decrement());
-    });
+			    for (var o in currentOptions) {
+			      if (currentOptions[o].constant !== undefined) {
+			        currentOptions[o].constant = comodity.options[o].constant;
+			      }
+			    }
+			    recalculate();
+		    }
+		  }
 
-    input.on('keyup', function(e) {
+		  var tickers = {};
 
-      try {
-        var value = parseFloat(input.val());
+		  // define the current (default) comodity to load.
+		  var currentComodity = comodities.chicken;
 
-        if (ticker.withinRange(value)) {
-          ticker.setValue(parseFloat(value));
-        } else {
-          input.val(ticker.value());
-        }
-      } catch (e) {
-        e.preventDefault();
-        input.val(ticker.value());
-      }
-    });
-  });
-});
-</script>
-</head>
+		  $('.ticker').each(function() {
+		    // retrieve an instance of the current ticker.
+		    var tc = $(this);
+		
+		    // retrieve the key to be used in associating a Ticker with it's Comodity model factor.
+		    var factorKey = tc.data('factor');
+		    // retrieve the associated comodity.
+		    var factorType = currentComodity.options[factorKey];
+		    // update the comodity's name label on the UI.
+		    tc.find('div.name').html(factorType.name);
+
+		    var ticker = new Ticker({max: factorType.max, value: factorType.value, min: factorType.min, step: factorType.step});
+		    tickers[factorKey] = ticker;
+
+		    var input = tc.find('div.value');
+		    input.html(ticker.value());
+		    var upBtn = tc.find('span.add');
+		    var downBtn = tc.find('span.minus');
+
+		   	upBtn.on('click', function(e) {
+		      input.html(ticker.increment());
+		      recalculate();
+		    });
+
+		    downBtn.on('click', function() {
+		      input.html(ticker.decrement());
+		      recalculate();
+		    });
+		  });
+
+		  $('a.comodity-nav').each(function() {
+		    var comodityNav = $(this);
+
+		    comodityNav.on('click', function(e) {
+		      // retrieve the identifier for the comodity.
+		      var comodityKey = $(this).data('comodity');
+		      currentComodity = comodities[comodityKey];
+		      updateComodity(comodities[comodityKey]);
+		      return false;
+		    });
+		  });
+
+		  // show the default values by recalculating.
+		  recalculate();
+		});
+	</script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="@routes.Assets.at("ico/favicon.ico")" />
+  </head>
+
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="span3">
-				<div class="ticker input-prepend input-append" data-factor="importersULC">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="population">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="openness">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="tradeFXRating">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="outputGap">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="ownTFP">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="ownULC">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="oil">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="lcpi">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="stocks">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="reer">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-				<div class="ticker input-prepend input-append" data-factor="rpdi">
-					<span class="label factor-name"></span><br/>
-					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
-					<input type="text" name="value" class="input-mini" />
-					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
-				</div>
-			</div>
-			<div class="span5">
-				<div>
-					<table class="table table-condensed table-bordered table-striped">
-						<tr>
-							<th>COMODITY</th>
-							<th>COEFFICIENT</th>
-							<th>PRICE</th>
-						</tr>
-						<tr>
-							<td><span class="label comodity"></span></td>
-							<td><span class="label label-success coefficient"></span></td>
-							<td><span class="label label-danger price"></span></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">
+        <img src="/assets/images/logo.png" alt="hck.trd.">
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="#about" class="about">about</a></li>
+          <li><a href="#analyse" class="analyse">analyse</a></li>
+          <li><a href="#voodoo" class="voodoo">voodoo</a></li>
+          <li><a href="#docs" class="docs">docs</a></li>
+          <li><a href="#developers" class="api">developers</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- [Banner] -->
+  <section class="banner">
+    
+  </section>
+  <!-- [/Banner] -->
+
+  <div class="main">
+    <!-- <section class="about">
+      
+    </section> -->
+
+    <section id="voodoo">
+      <div class="container">
+        <div class="row">
+          <div class="controls span3 pull-left">
+            <!--<div class="sect">
+              <label for="country">Country</label>
+              <select name="country" id="country">
+                <option value="Nigeria">Nigeria</option>
+                <option value="Ghana">Ghana</option>
+              </select>
+            </div>-->
+
+            <div class="sect">
+            <label for="">Trade Factors</label>
+              <ul>
+                <li class="ticker" data-factor="importersULC">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="population">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="openness">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="tradeFXRating">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="outputGap">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="ownTFP">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="ownULC">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="oil">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="lcpi">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="stocks">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="reer">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="rpdi">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="infographics span9 pull-right">
+          	<h3 style="width: 568px;margin: 0 auto;font-size: 26px;margin-bottom: 10px;">See the effect of trade factors on retail prices.</h3>
+            <div class="slider container">
+              <ul class="commodity-slider">
+                <li data-info="chicken">
+                  <img src="/assets/images/chicken.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">&nbsp;</h2>
+                      <p class="description">&nbsp;</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="blacktea">
+                  <img src="/assets/images/tea.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="soap">
+                  <img src="/assets/images/soap.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="water">
+                  <img src="/assets/images/water.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="shoe">
+                  <img src="/assets/images/shoe.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+           <div class="slide-nav container">
+            <ul>
+              <li><a href="#1" class="comodity-nav" data-comodity="chicken"><img src="/assets/images/chicken.jpg" alt="" width="100"></a></li>
+              <li><a href="#2" class="comodity-nav" data-comodity="blacktea"><img src="/assets/images/tea.jpg" alt="" width="100"></a></li>
+              <li><a href="#3" class="comodity-nav" data-comodity="soap"><img src="/assets/images/soap.jpg" alt="" width="100"></a></li>
+              <li><a href="#4" class="comodity-nav" data-comodity="water"><img src="/assets/images/water.jpg" alt="" width="100"></a></li>
+              <li><a href="#5" class="comodity-nav" data-comodity="shoe"><img src="/assets/images/shoe.jpg" alt="" width="100"></a></li>
+            </ul>
+          </div>
+          
+          <div style="width: 560px; margin: 40px auto 0;">
+          	<div class="fb-comments" data-href="http://trdhckr.com" data-num-posts="10" data-width="560"></div>
+          </div>
+          
+          
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="analyze">
+      
+    </section> 
+
+    <section class="docs">
+      
+    </section>
+
+    <section class="developers">
+      
+    </section>-->
+  </div>
+
+  <script type="text/javascript">
+    $(function() {
+      // AnythingSlider setup
+      var $slider = $('.commodity-slider')
+
+      $slider.anythingSlider({
+        buildStartStop: false,
+        buildArrows: false,
+        buildNavigation: false,
+        hashTags: false
+      })
+
+      $('.slide-nav a').on('click', function(){
+        var slide = $(this).attr('href').substring(1);
+        $('.commodity-slider').anythingSlider(slide);
+        return false;
+      });
+
+      /**
+       * Scroll to target section when a
+       * nav link is clicked
+       */
+      $("nav a, nav li").on("click", function(e) {
+        e.preventDefault()
+        var targetElement = $(this).attr('href'),
+            targetElementOffset = $(targetElement).offset().top - $('header').height() - 40
+
+        $(this).addClass('active')
+
+        $('html,body').animate({scrollTop: targetElementOffset}, 700)
+      });
+    })
+  </script>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=273707839388084";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
