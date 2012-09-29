@@ -409,7 +409,7 @@
       }
     }),
     shoe: new Comodity({
-      name: 'Shoe',
+      name: 'Shoes',
       desc: 'Retail price of a pair of Shoes',
       key: 'shoe',
       coefficient: 394384.03,
