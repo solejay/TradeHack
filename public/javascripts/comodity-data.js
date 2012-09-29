@@ -58,7 +58,7 @@
         constant: 5.59,
         min: 29,
         max: 182,
-        value: 122,
+        value: 121,
         step: 1
       },
       oil: {
