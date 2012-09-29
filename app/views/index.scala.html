@@ -14,16 +14,38 @@ input[type=text] {
 <script type="text/javascript" src="@routes.Assets.at("javascripts/ticker.js")"></script>
 <script type="text/javascript">
 $(function() {
+  //define the comodities or pull from an external source.
+  var comodities = {
+    rice: {
+      name: 'Rice',
+      importersULC: {
+        name: 'Importers ULC',
+      	constant: 0.93,
+      	value: 2.55
+      }
+    }
+  };
+
   $('.ticker').each(function() {
+    // retrieve an instance of the current ticker.
     var tc = $(this);
-    var ticker = new Ticker({max: 5, value: 2, min: 2, step: 0.05});
+
+    // retrieve the key to be used in associating a Ticker with it's Comodity model factor.
+    var factorKey = tc.data('factor');
+    // retrieve the associated comodity.
+    var comodity = comodities[factorKey];
+    // update the comodity's name label on the UI.
+    tc.find('span.factor-name').html(comodity.name);
+
+    var ticker = new Ticker({max: 5, value: comodity.value, min: 2, step: 0.05});
     var input = tc.find('input[name=value]');
     input.val(ticker.value());
     var upBtn = tc.find('button.up-btn');
     var downBtn = tc.find('button.down-btn');
 
-   	upBtn.on('click', function() {
+   	upBtn.on('click', function(e) {
       input.val(ticker.increment());
+      
     });
 
     downBtn.on('click', function() {
@@ -52,66 +74,94 @@ $(function() {
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="span12">
-				<div class="ticker input-prepend input-append">
+			<div class="span3">
+				<div class="ticker input-prepend input-append" data-factor="importersULC">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="population">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="openness">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="tradeFXRating">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="outputGap">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="ownTFP">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="ownULC">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="oil">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="lcpi">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="stocks">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="reer">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
 				</div>
-				<div class="ticker input-prepend input-append">
+				<div class="ticker input-prepend input-append" data-factor="rpdi">
+					<span class="label factor-name"></span><br/>
 					<span class="add-on"><button class="btn btn-mini down-btn"><span class="icon icon-chevron-down"></span></button></span>
 					<input type="text" name="value" class="input-mini" />
 					<span class="add-on"><button class="btn btn-mini up-btn"><span class="icon icon-chevron-up"></span></button></span>
+				</div>
+			</div>
+			<div class="span5">
+				<div>
+					<table class="table table-condensed table-bordered table-striped">
+						<tr>
+							<th>COMODITY</th>
+							<th>COEFFICIENT</th>
+							<th>PRICE</th>
+						</tr>
+						<tr>
+							<td><span class="label comodity"></span></td>
+							<td><span class="label label-success coefficient"></span></td>
+							<td><span class="label label-danger price"></span></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>

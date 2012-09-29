@@ -12,30 +12,34 @@ var Ticker = (function() {
     this.options = {
       min : 0,
       max : 100,
-      step : 1,
-      value : 0
+      step : 1
     };
 
     // see if any default values were provided.
     if (options !== null && options !== undefined) {
+
       // update our options with the user's options.
-      if (options.min)
-        this.options.min = options.min;
-      if (options.max)
-        this.options.max = options.max;
-      if (options.step)
-        this.options.step = options.step;
-      if (options.value) {
-        // check if the value is within range before changing it.
-        if (this.withinRange(options.value)) {
-          this.options.value = options.value;
-        } else {
-          if (options.min) {
-            this.options.value = options.min;
+      for (var key in options) {
+        // check for the value key/property.
+        if (key === 'value') {
+          var value = options[key];
+          // check if the value is within range before changing it.
+          if (this.withinRange(value)) {
+            this.options.value = value;
           } else {
-            this.options.value = this.options.min;
+            if (options.min) {
+              this.options.value = options.min;
+            } else {
+              this.options.value = this.options.min;
+            }
           }
+        } else {
+          this.options[key] = options[key];
         }
+      }
+      
+      if (this.options.value === undefined) {
+        this.options.value = this.options.min;
       }
     }
   };
