@@ -2,7 +2,7 @@
   var comodities = {
     chicken: new Comodity({
       name: 'Chicken',
-      desc: 'Retail price of chicken...',
+      desc: 'Retail price of Chicken...',
       key: 'chicken',
       coefficient: -2338.14,
       importersULC: {
@@ -104,7 +104,7 @@
     }),
     blacktea: new Comodity({
 	  name: 'Black Tea',
-	  desc: 'Retail price of black tea...',
+	  desc: 'Retail price of Black Tea',
 	  key: 'blacktea',
 	  coefficient: -3.42,
 	  importersULC: {
@@ -206,7 +206,7 @@
 	}),
 	water: new Comodity({
       name: 'Water',
-      desc: 'Retail price of water...',
+      desc: 'Retail price of Bottled Water',
       key: 'water',
       coefficient: 4800.97,
       importersULC: {
@@ -308,7 +308,7 @@
     }),
     soap: new Comodity({
       name: 'Soap',
-      desc: 'Retail price of soap...',
+      desc: 'Retail price of a bar of Soap',
       key: 'soap',
       coefficient: -1417.56,
       importersULC: {
@@ -410,7 +410,7 @@
     }),
     shoe: new Comodity({
       name: 'Shoe',
-      desc: 'Retail price of shoe...',
+      desc: 'Retail price of a pair of Shoes',
       key: 'shoe',
       coefficient: 394384.03,
       importersULC: {
