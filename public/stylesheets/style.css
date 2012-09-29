@@ -1,0 +1,174 @@
+body {
+  background: url(/assets/images/background.png) repeat;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+}
+a:hover {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Header */
+header {
+  height: 120px;
+}
+header .logo {
+  float: left;
+  display: block;
+  margin-top: 25px;
+}
+header nav {
+  float: right;
+  font-size: 17px;
+}
+header nav li {
+  float: left;
+  margin-left: 40px;
+  margin-top: 25px;
+  padding: 50px 0 0;
+}
+header nav li a {
+  display: block;
+  color: #333;
+}
+header nav li.analyse {
+  background: url(/assets/images/analyse.png) no-repeat center top;
+}
+header nav li.voodoo {
+  background: url(/assets/images/voodoo.png) no-repeat center top;
+}
+header nav li.voodoo {
+  background: url(/assets/images/voodoo.png) no-repeat center top;
+}
+header nav li.docs {
+  background: url(/assets/images/docs.png) no-repeat center top;
+}
+header nav li.about {
+  background: url(/assets/images/about.png) no-repeat center top;
+}
+header nav li.api {
+  background: url(/assets/images/api.png) no-repeat center top;
+}
+
+
+/* Controls */
+.controls li {
+  padding: 10px 0;
+  overflow: hidden;
+}
+.controls li .name {
+  float: left;
+}
+.controls li .value, .controls li .control {
+  float: right;
+}
+.controls li .name {
+  font-size: 14px;
+}
+
+
+/* Banner */
+.banner {
+  height: 350px;
+  background: #ccc;
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* controls */
+.controls .sect {  
+  border-bottom: 1px solid white;
+  border-top: 1px solid #d1d7dc;
+  padding: 10px 0;
+}
+.controls .sect:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.controls .sect:last-child {
+  border-bottom: 0;
+}
+.controls label {
+  font-weight: bold;
+}
+.controls li {
+  font-size: 16px;
+}
+.controls .value {
+  color: #f00030;
+  font-weight: bold;
+}
+.controls .control {
+  margin-left: 20px;
+}
+.controls .control span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  background: #333;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+.main {
+  padding: 40px 0;
+}
+
+.infographics {
+  background: white;
+  min-height: 600px;
+  padding-top: 30px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.slider {
+  padding: 10px;
+  background: #f00030;
+  width: 540px;
+}
+.slide-nav {
+  margin-top: 10px;
+}
+.slide-nav li {
+  float: left;
+  margin-left: 10px;
+}
+.slide-nav li:first-child {
+  margin-left: 0;
+}
+.commodity-slider {
+  width: 540px;
+  height: 360px;
+}
+.commodity-slider li {
+  position: relative;
+}
+.commodity-info {
+  position: absolute;
+  bottom: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  width: 100%;
+  padding-bottom: 20px;
+}
+.commodity-info .name-info {
+  margin-left: 20px;
+}
+.commodity-info .title {
+  font-size: 37px;
+  line-height: 0.7;
+  padding-top: 10px;
+}
+.commodity-info .price-info {
+  margin-right: 20px;
+  font-size: 50px;
+  font-weight: bold;
+  padding-top: 35px;
+}
+

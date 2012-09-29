@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>trd hckr.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- styles -->
+    <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@routes.Assets.at("stylesheets/anythingslider.css")" rel="stylesheet" />
+    <link href="/assets/stylesheets/style.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.anythingslider.min.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/ticker.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/app.js")"></script>
+
+    <script type="text/javascript">
+		$(function() {
+		  function recalculate(priceField) {
+		    for (var tickerName in tickers) {
+		      var ticker = tickers[tickerName];
+		      currentComodity.options[tickerName].value = ticker.value();
+		    }
+		    // calculate the price of the currently selected comodity.
+		    var price = currentComodity.calculatePrice();
+
+		    var dataInfo = $('li[data-info=' + currentComodity.options.key + ']');
+		    dataInfo.find('span.price').html(price);
+		    dataInfo.find('h2.title').html(currentComodity.options.name);
+		    dataInfo.find('p.description').html(currentComodity.options.desc);
+		  }
+		  
+		  // updates the current comodity's constant values.
+		  function updateComodity(comodity) {
+		    if (comodity) {
+			    var currentOptions = currentComodity.options;
+			    currentOptions.name = comodity.options.name;
+			    currentOptions.desc = comodity.options.desc;
+			    currentOptions.key = comodity.options.key;
+			    currentOptions.coefficient = comodity.options.coefficient;
+
+			    for (var o in currentOptions) {
+			      if (currentOptions[o].constant !== undefined) {
+			        currentOptions[o].constant = comodity.options[o].constant;
+			      }
+			    }
+			    recalculate();
+		    }
+		  }
+
+		  var tickers = {};
+
+		  // define the comodities or pull from an external source.
+		  var comodities = {
+		    rice: new Comodity({
+		      name: 'Chicken',
+		      desc: 'Chicken ...',
+		      key: 'chicken',
+		      coefficient: -2338.14,
+		      importersULC: {
+		        name: 'TW Importers ULC',
+		      	constant: -22.65,
+		      	min: 77,
+		      	max: 137,
+		      	step: 1
+		      },
+		      population: {
+		        name: 'Population',
+		        constant: 40.96,
+		        min: 113,
+		        max: 166,
+		        step: 1
+		      },
+		      openness: {
+		        name: 'Openness',
+		        constant: 203.20,
+		        min: 2,
+		        max: 5,
+		        step: 0.05
+		      },
+		      tradeFXRating: {
+		        name: 'Trade FX Rating',
+		        constant: -16.32,
+		        min: 3,
+		        max: 5,
+		        step: 0.1
+		      },
+		      outputGap: {
+		        name: 'Output Gap',
+		        constant: 13.68,
+		        min: -71,
+		        max: -3,
+		        step: 1
+		      },
+		      ownTFP: {
+		        name: 'Own TFP',
+		        constant: 1.80,
+		        min: -1,
+		        max: 38,
+		        step: 1
+		      },
+		      ownULC: {
+		        name: 'Own ULC',
+		        constant: 5.59,
+		        min: 29,
+		        max: 182,
+		        step: 1
+		      },
+		      oil: {
+		        name: 'Oil',
+		        constant: -5.92,
+		        min: 13,
+		        max: 111,
+		        step: 1
+		      },
+		      lcpi: {
+		        name: 'LCPI',
+		        constant: 0.93,
+		        min: 35,
+		        max: 179,
+		        step: 1
+		      },
+		      stocks: {
+		        name: 'Stocks',
+		        constant: 13.03,
+		        min: -7,
+		        max: 3,
+		        step: 0.05
+		      },
+		      reer: {
+		        name: 'REER',
+		        constant: -4.56,
+		        min: 28,
+		        max: 113,
+		        step: 1
+		      },
+		      rpdi: {
+		        name: 'RPDI',
+		        constant: -30.76,
+		        min: 10,
+		        max: 53,
+		        step: 1
+		      }
+		    })
+		  };
+
+		  // define the current (default) comodity to load.
+		  var currentComodity = comodities.rice;
+
+		  $('.ticker').each(function() {
+		    // retrieve an instance of the current ticker.
+		    var tc = $(this);
+		
+		    // retrieve the key to be used in associating a Ticker with it's Comodity model factor.
+		    var factorKey = tc.data('factor');
+		    // retrieve the associated comodity.
+		    var factorType = currentComodity.options[factorKey];
+		    // update the comodity's name label on the UI.
+		    tc.find('div.name').html(factorType.name);
+
+		    var ticker = new Ticker({max: factorType.max, value: factorType.value, min: factorType.min, step: factorType.step});
+		    tickers[factorKey] = ticker;
+
+		    var input = tc.find('div.value');
+		    input.html(ticker.value());
+		    var upBtn = tc.find('span.add');
+		    var downBtn = tc.find('span.minus');
+
+		   	upBtn.on('click', function(e) {
+		      input.html(ticker.increment());
+		      recalculate();
+		    });
+
+		    downBtn.on('click', function() {
+		      input.html(ticker.decrement());
+		      recalculate();
+		    });
+		  });
+
+		  $('a.comodity-nav').each(function() {
+		    var comodityNav = $(this);
+
+		    comodityNav.on('click', function(e) {
+		      // retrieve the identifier for the comodity.
+		      var comodityKey = $(this).data('comodity');
+		      updateComodity(comodities[comodityKey]);
+		      return false;
+		    });
+		  });
+
+		  // show the default values by recalculating.
+		  recalculate();
+		});
+	</script>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="@routes.Assets.at("ico/favicon.ico")" />
+  </head>
+
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">
+        <img src="/assets/images/logo.png" alt="hck.trd.">
+      </a>
+
+      <nav>
+        <ul>
+          <li class="about"><a href="">about</a></li>
+          <li class="analyse"><a href="">analyse</a></li>
+          <li class="voodoo"><a href="">voodoo</a></li>
+          <li class="docs"><a href="">docs</a></li>
+          <li class="api"><a href="">developers</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- [Banner] -->
+  <section class="banner">
+    
+  </section>
+  <!-- [/Banner] -->
+
+  <div class="main">
+    <!-- <section class="about">
+      
+    </section> -->
+
+    <section id="analyse">
+      <div class="container">
+        <div class="row">
+          <div class="controls span3 pull-left">
+            <div class="sect">
+              <label for="country">Country</label>
+              <select name="country" id="country">
+                <option value="Nigeria">Nigeria</option>
+                <option value="Ghana">Ghana</option>
+              </select>
+            </div>
+
+            <div class="sect">
+            <label for="">Controls</label>
+              <ul>
+                <li class="ticker" data-factor="importersULC">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="population">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="openness">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="tradeFXRating">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="outputGap">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="ownTFP">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="ownULC">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="oil">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="lcpi">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="stocks">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="reer">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+                <li class="ticker" data-factor="rpdi">
+                  <div class="name">Import / GDP</div>
+                  <div class="control">
+                    <span class="add">+</span>
+                    <span class="minus">-</span>
+                  </div>
+                  <div class="value">35</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="infographics span9 pull-right">
+            <div class="slider container">
+              <ul class="commodity-slider">
+                <li data-info="chicken">
+                  <img src="/assets/images/soap.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="soap">
+                  <img src="/assets/images/soap.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="tea">
+                  <img src="/assets/images/soap.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="rice">
+                  <img src="/assets/images/soap.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+                <li data-info="shoe">
+                  <img src="/assets/images/soap.jpg" alt="" height="360" />
+                  <div class="commodity-info">
+                    <div class="name-info pull-left">
+                      <h2 class="title">Bar of Soap</h2>
+                      <p class="description">Supermarket price of a pair of Shoes</p>
+                    </div>
+                    <div class="price-info pull-right">
+                      &#x20a6;<span class="price">10,000</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="slide-nav">
+                <ul>
+                  <li><a href="#1" class="comodity-nav" data-comodity="chicken"><img src="/assets/images/soap.jpg" alt="" width="100"></a></li>
+                  <li><a href="#2" class="comodity-nav" data-comodity="soap"><img src="/assets/images/soap.jpg" alt="" width="100"></a></li>
+                  <li><a href="#3" class="comodity-nav" data-comodity="tea"><img src="/assets/images/soap.jpg" alt="" width="100"></a></li>
+                  <li><a href="#4" class="comodity-nav" data-comodity="rice"><img src="/assets/images/soap.jpg" alt="" width="100"></a></li>
+                  <li><a href="#5" class="comodity-nav" data-comodity="shoe"><img src="/assets/images/soap.jpg" alt="" width="100"></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="voodoo">
+      
+    </section> 
+
+    <section class="docs">
+      
+    </section>
+
+    <section class="developers">
+      
+    </section>-->
+  </div>
+
+  <script type="text/javascript">
+    $(function() {
+      // AnythingSlider setup
+      var $slider = $('.commodity-slider')
+
+      $slider.anythingSlider({
+        buildStartStop: false,
+        buildArrows: false,
+        buildNavigation: false,
+        hashTags: false
+      })
+
+      $('.slide-nav a').on('click', function(){
+        var slide = $(this).attr('href').substring(1);
+        $('.commodity-slider').anythingSlider(slide);
+        return false;
+      });
+    })
+  </script>
+</body>
+</html>
