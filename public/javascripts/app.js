@@ -28,7 +28,8 @@ var Comodity = (function() {
       lcpi: {constant: 0.0, value: 0.0},
       stocks: {constant: 0.0, value: 0.0},
       reer: {constant: 0.0, value: 0.0},
-      rpdi: {constant: 0.0, value: 0.0}
+      rpdi: {constant: 0.0, value: 0.0},
+      tarrif: {constant: 0.0, value: 0.0}
     };
 
     // see if any default values were provided.
@@ -49,18 +50,19 @@ var Comodity = (function() {
       // compute the price of the comodity using variables affecting it.
       var price =
         o.coefficient
-        + (o.importersULC.constant * o.importersULC.value)
-        + (o.population.constant * o.population.value)
-        + (o.openness.constant * o.openness.value)
-        + (o.tradeFXRating.constant * o.tradeFXRating.value)
-        + (o.outputGap.constant * o.outputGap.value)
-        + (o.ownTFP.constant * o.ownTFP.value)
-        + (o.ownULC.constant * o.ownULC.value)
-        + (o.oil.constant * o.oil.value)
-        + (o.lcpi.constant * o.lcpi.value)
-        + (o.stocks.constant * o.stocks.value)
-        + (o.reer.constant * o.reer.value)
-        + (o.rpdi.constant * o.rpdi.value);
+        + (o.importersULC.constant * ((o.importersULC.value - o.importersULC.constant) / o.importersULC.constant))
+        + (o.population.constant * ((o.population.value - o.population.constant) / o.population.constant))
+        + (o.openness.constant * ((o.openness.value - o.openness.constant) / o.openness.constant))
+        + (o.tradeFXRating.constant * ((o.tradeFXRating.value - o.tradeFXRating.constant) / o.tradeFXRating.constant))
+        + (o.outputGap.constant * ((o.outputGap.value - o.outputGap.constant) / o.outputGap.constant))
+        + (o.ownTFP.constant * ((o.ownTFP.value - o.ownTFP.constant) / o.ownTFP.constant))
+        + (o.ownULC.constant * ((o.ownULC.value - o.ownULC.constant) / o.ownULC.constant))
+        + (o.oil.constant * ((o.oil.value - o.oil.constant) / o.oil.constant))
+        + (o.lcpi.constant * ((o.lcpi.value - o.lcpi.constant) / o.lcpi.constant))
+        + (o.stocks.constant * ((o.stocks.value - o.stocks.constant) / o.stocks.constant))
+        + (o.reer.constant * ((o.reer.value - o.reer.constant) / o.reer.constant))
+        + (o.rpdi.constant * ((o.rpdi.value - o.rpdi.constant) / o.rpdi.constant))
+        + (o.tarrif.constant * ((o.tarrif.value - o.tarrif.constant) / o.tarrif.constant));
       // return the resulting price.
       return parseFloat(price.toFixed(2));
     }

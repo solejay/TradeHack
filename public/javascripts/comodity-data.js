@@ -100,6 +100,14 @@
         max: 53,
         value: 38,
         step: 1
+      },
+      tarrif: {
+        name: 'Tarrif',
+        constant: 20,
+        min: 20,
+        max: 40,
+        value: 30,
+        step: 1
       }
     }),
     blacktea: new Comodity({
@@ -201,6 +209,14 @@
 	    min: 10,
 	    max: 53,
 	    value: 38,
+	    step: 1
+	  },
+	  tarrif: {
+	    name: 'Tarrif',
+	    constant: 20,
+	    min: 20,
+	    max: 30,
+	    value: 40,
 	    step: 1
 	  }
 	}),
