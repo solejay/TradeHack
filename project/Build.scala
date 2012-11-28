@@ -13,10 +13,11 @@ object ApplicationBuild extends Build {
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      // Add your own project settings here 
+      // Add your own project settings here
          resolvers ++= Seq(
         		 "repo.novus snaps" at "http://repo.novus.com/snapshots/",
-        		 "Local Repo" at "file:///C:/Frameworks/play-2.0.3/repository/local"
+             "repo.novus" at "http://repo.novus.com/releases/",
+             "Local Repo" at "file:///Users/CLIVE/Applications/play-2.1-RC1/repository/cache"
         		)
     )
 
