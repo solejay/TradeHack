@@ -33,7 +33,7 @@
 		    dataInfo.find('h2.title').html(currentComodity.options.name);
 		    dataInfo.find('p.description').html(currentComodity.options.desc);
 		  }
-		  
+
 		  // updates the current comodity's constant values.
 		  function updateComodity(comodity) {
 		    if (comodity) {
@@ -60,7 +60,7 @@
 		  $('.ticker').each(function() {
 		    // retrieve an instance of the current ticker.
 		    var tc = $(this);
-		
+
 		    // retrieve the key to be used in associating a Ticker with it's Comodity model factor.
 		    var factorKey = tc.data('factor');
 		    // retrieve the associated comodity.
@@ -122,11 +122,10 @@
 
       <nav>
         <ul>
-          <li><a href="#about" class="about">about</a></li>
-          <li><a href="#analyse" class="analyse">analyse</a></li>
           <li><a href="#voodoo" class="voodoo">voodoo</a></li>
+          <li><a href="#analyse" class="analyse">methodology</a></li>
           <li><a href="#docs" class="docs">docs</a></li>
-          <li><a href="#developers" class="api">developers</a></li>
+          <li><a href="#about" class="about">about</a></li>
         </ul>
       </nav>
     </div>
@@ -134,16 +133,16 @@
 
   <!-- [Banner] -->
   <section class="banner">
-    
+
   </section>
   <!-- [/Banner] -->
 
   <div class="main">
     <!-- <section class="about">
-      
+
     </section> -->
 
-    <section id="voodoo">
+    <section id="voodoo" class="row">
       <div class="container">
         <div class="row">
           <div class="controls span3 pull-left">
@@ -331,7 +330,7 @@
                 </li>
               </ul>
             </div>
-            
+
            <div class="slide-nav container">
             <ul>
               <li><a href="#1" class="comodity-nav" data-comodity="chicken"><img src="/assets/images/chicken.jpg" alt="" width="100"></a></li>
@@ -341,33 +340,41 @@
               <li><a href="#5" class="comodity-nav" data-comodity="shoe"><img src="/assets/images/shoe.jpg" alt="" width="100"></a></li>
             </ul>
           </div>
-          
+
           <div style="width: 560px; margin: 40px auto 0;">
           	<div class="fb-comments" data-href="http://trdhckr.com" data-num-posts="10" data-width="560"></div>
           </div>
-          
-          
+
+
           </div>
         </div>
-        
-        <div style="text-align: right;margin-top: 20px;">
-        	<img src="/assets/images/cchub_logo.png" alt="" />
-        </div>
       </div>
-      
+
     </section>
 
-    <!-- <section class="analyze">
-      
-    </section> 
+    <section class="methodology">
+
+    </section>
 
     <section class="docs">
-      
+
     </section>
 
-    <section class="developers">
-      
-    </section>-->
+    <section id="about" class="row">
+      <div class="container">
+        <div class="article span9 pull-right">
+          <div>
+            <h1>About</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container" style="text-align: right;margin-top: 20px;">
+      <img src="/assets/images/cchub_logo.png" alt="" />
+    </div>
   </div>
 
   <script type="text/javascript">
