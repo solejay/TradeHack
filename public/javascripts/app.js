@@ -45,24 +45,28 @@ var Comodity = (function() {
    * Prototype or clone the Comodity while adding utility functions to it.
    */
   Comodity.prototype = {
+    calculateChange: function(con, value) {
+      if (con === 0) return 1
+      else return con * ((value - con) / con);
+    },
     calculatePrice: function() {
       var o = this.options;
       // compute the price of the comodity using variables affecting it.
       var price =
         o.coefficient
-        + (o.importersULC.constant * ((o.importersULC.value - o.importersULC.constant) / o.importersULC.constant))
-        + (o.population.constant * ((o.population.value - o.population.constant) / o.population.constant))
-        + (o.openness.constant * ((o.openness.value - o.openness.constant) / o.openness.constant))
-        + (o.tradeFXRating.constant * ((o.tradeFXRating.value - o.tradeFXRating.constant) / o.tradeFXRating.constant))
-        + (o.outputGap.constant * ((o.outputGap.value - o.outputGap.constant) / o.outputGap.constant))
-        + (o.ownTFP.constant * ((o.ownTFP.value - o.ownTFP.constant) / o.ownTFP.constant))
-        + (o.ownULC.constant * ((o.ownULC.value - o.ownULC.constant) / o.ownULC.constant))
-        + (o.oil.constant * ((o.oil.value - o.oil.constant) / o.oil.constant))
-        + (o.lcpi.constant * ((o.lcpi.value - o.lcpi.constant) / o.lcpi.constant))
-        + (o.stocks.constant * ((o.stocks.value - o.stocks.constant) / o.stocks.constant))
-        + (o.reer.constant * ((o.reer.value - o.reer.constant) / o.reer.constant))
-        + (o.rpdi.constant * ((o.rpdi.value - o.rpdi.constant) / o.rpdi.constant))
-        + (o.tarrif.constant * ((o.tarrif.value - o.tarrif.constant) / o.tarrif.constant));
+        + this.calculateChange(o.importersULC.constant, o.importersULC.value)
+        + this.calculateChange(o.population.constant, o.population.value)
+        + this.calculateChange(o.openness.constant, o.openness.value)
+        + this.calculateChange(o.tradeFXRating.constant, o.tradeFXRating.value)
+        + this.calculateChange(o.outputGap.constant, o.outputGap.value)
+        + this.calculateChange(o.ownTFP.constant, o.ownTFP.value)
+        + this.calculateChange(o.ownULC.constant, o.ownULC.value)
+        + this.calculateChange(o.oil.constant, o.oil.value)
+        + this.calculateChange(o.lcpi.constant, o.lcpi.value)
+        + this.calculateChange(o.stocks.constant, o.stocks.value)
+        + this.calculateChange(o.reer.constant, o.reer.value)
+        + this.calculateChange(o.rpdi.constant, o.rpdi.value)
+        + this.calculateChange(o.tarrif.constant, o.tarrif.value);
       // return the resulting price.
       return parseFloat(price.toFixed(2));
     }

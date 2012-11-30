@@ -1,21 +1,21 @@
 // define the comodities or pull from an external source.
   var comodities = {
     chicken: new Comodity({
-      name: 'Chicken',
+      name: 'Chicken',  
       desc: 'Retail price of Chicken',
       key: 'chicken',
-      coefficient: -2338.14,
+      coefficient: -2.598874888,
       importersULC: {
         name: 'TW Importers ULC',
-      	constant: -22.65,
-      	min: 77,
-      	max: 137,
-      	value: 86,
-      	step: 1
+        constant: -0.215454788,
+        min: 77,
+        max: 137,
+        value: 86,
+        step: 1
       },
       population: {
         name: 'Population',
-        constant: 40.96,
+        constant: 104.2896122,
         min: 113,
         max: 166,
         value: 113,
@@ -23,7 +23,7 @@
       },
       openness: {
         name: 'Openness',
-        constant: 203.20,
+        constant: 0.394337564,
         min: 2,
         max: 5,
         value: 5,
@@ -31,7 +31,7 @@
       },
       tradeFXRating: {
         name: 'Trade FX Rating',
-        constant: -16.32,
+        constant: -0.80365684,
         min: 3,
         max: 5,
         value: 4.9,
@@ -39,7 +39,7 @@
       },
       outputGap: {
         name: 'Output Gap',
-        constant: 13.68,
+        constant: -0.324777822,
         min: -71,
         max: -3,
         value: -3.27,
@@ -47,7 +47,7 @@
       },
       ownTFP: {
         name: 'Own TFP',
-        constant: 1.80,
+        constant: 0,
         min: -1,
         max: 38,
         value: 3,
@@ -55,7 +55,7 @@
       },
       ownULC: {
         name: 'Own ULC',
-        constant: 5.59,
+        constant: 0.03937721,
         min: 29,
         max: 182,
         value: 121,
@@ -63,7 +63,7 @@
       },
       oil: {
         name: 'Oil',
-        constant: -5.92,
+        constant: 0,
         min: 13,
         max: 111,
         value: 20,
@@ -71,7 +71,7 @@
       },
       lcpi: {
         name: 'LCPI',
-        constant: 0.93,
+        constant: 0,
         min: 35,
         max: 179,
         value: 35,
@@ -79,7 +79,7 @@
       },
       stocks: {
         name: 'Stocks',
-        constant: 13.03,
+        constant: 0,
         min: -7,
         max: 3,
         value: 3,
@@ -87,7 +87,7 @@
       },
       reer: {
         name: 'REER',
-        constant: -4.56,
+        constant: 0.040472518,
         min: 28,
         max: 113,
         value: 89,
@@ -95,15 +95,15 @@
       },
       rpdi: {
         name: 'RPDI',
-        constant: -30.76,
+        constant: -0.165409326,
         min: 10,
         max: 53,
         value: 38,
         step: 1
       },
       tarrif: {
-        name: 'Tarrif',
-        constant: 20,
+        name: 'Tariff',
+        constant: -1.986639975,
         min: 20,
         max: 40,
         value: 30,
@@ -111,233 +111,21 @@
       }
     }),
     blacktea: new Comodity({
-	  name: 'Black Tea',
-	  desc: 'Retail price of Black Tea',
-	  key: 'blacktea',
-	  coefficient: -3.42,
-	  importersULC: {
-	    name: 'TW Importers ULC',
-	  	constant: 0.18,
-	  	min: 77,
-	  	max: 137,
-	  	value: 86,
-	  	step: 1
-	  },
-	  population: {
-	    name: 'Population',
-	    constant: 2.74,
-	    min: 113,
-	    max: 166,
-	    value: 113,
-	    step: 1
-	  },
-	  openness: {
-	    name: 'Openness',
-	    constant: 12.85,
-	    min: 2,
-	    max: 5,
-	    value: 5,
-	    step: 0.05
-	  },
-	  tradeFXRating: {
-	    name: 'Trade FX Rating',
-	    constant: -33.05,
-	    min: 3,
-	    max: 5,
-	    value: 5,
-	    step: 0.1
-	  },
-	  outputGap: {
-	    name: 'Output Gap',
-	    constant: 2.72,
-	    min: -71,
-	    max: -3,
-	    value: -3,
-	    step: 1
-	  },
-	  ownTFP: {
-	    name: 'Own TFP',
-	    constant: 0.81,
-	    min: -1,
-	    max: 38,
-	    value: 3,
-	    step: 1
-	  },
-	  ownULC: {
-	    name: 'Own ULC',
-	    constant: 1.10,
-	    min: 29,
-	    max: 182,
-	    value: 122,
-	    step: 1
-	  },
-	  oil: {
-	    name: 'Oil',
-	    constant: -1.31,
-	    min: 13,
-	    max: 111,
-	    value: 20,
-	    step: 1
-	  },
-	  lcpi: {
-	    name: 'LCPI',
-	    constant: -0.37,
-	    min: 35,
-	    max: 179,
-	    value: 35,
-	    step: 1
-	  },
-	  stocks: {
-	    name: 'Stocks',
-	    constant: -0.30,
-	    min: -7,
-	    max: 3,
-	    value: 3,
-	    step: 0.05
-	  },
-	  reer: {
-	    name: 'REER',
-	    constant:-1.15,
-	    min: 28,
-	    max: 113,
-	    value: 89,
-	    step: 1
-	  },
-	  rpdi: {
-	    name: 'RPDI',
-	    constant: -3.96,
-	    min: 10,
-	    max: 53,
-	    value: 38,
-	    step: 1
-	  },
-	  tarrif: {
-	    name: 'Tarrif',
-	    constant: 20,
-	    min: 20,
-	    max: 30,
-	    value: 40,
-	    step: 1
-	  }
-	}),
-	water: new Comodity({
-      name: 'Bottled Water',
-      desc: 'Retail price of Bottled Water',
-      key: 'water',
-      coefficient: 4800.97,
+    name: 'Black Tea',
+    desc: 'Retail price of Black Tea',
+    key: 'blacktea',
+    coefficient: -6.317154677,
       importersULC: {
         name: 'TW Importers ULC',
-      	constant: -37.64,
-      	min: 77,
-      	max: 137,
-      	value: 86,
-      	step: 1
+        constant: -0.114175116,
+        min: 77,
+        max: 137,
+        value: 86,
+        step: 1
       },
       population: {
         name: 'Population',
-        constant: 1.04,
-        min: 113,
-        max: 166,
-        value: 112,
-        step: 1
-      },
-      openness: {
-        name: 'Openness',
-        constant: 123.48,
-        min: 2,
-        max: 5,
-        value: 5,
-        step: 0.05
-      },
-      tradeFXRating: {
-        name: 'Trade FX Rating',
-        constant: 56.21,
-        min: 3,
-        max: 5,
-        value: 5,
-        step: 0.1
-      },
-      outputGap: {
-        name: 'Output Gap',
-        constant: 9.66,
-        min: -71,
-        max: -3,
-        value: -3,
-        step: 1
-      },
-      ownTFP: {
-        name: 'Own TFP',
-        constant: 16.02,
-        min: -1,
-        max: 38,
-        value: 3,
-        step: 1
-      },
-      ownULC: {
-        name: 'Own ULC',
-        constant: 30.90,
-        min: 29,
-        max: 182,
-        value: 122,
-        step: 1
-      },
-      oil: {
-        name: 'Oil',
-        constant: -16.93,
-        min: 13,
-        max: 111,
-        value: 20,
-        step: 1
-      },
-      lcpi: {
-        name: 'LCPI',
-        constant: -7.71,
-        min: 35,
-        max: 179,
-        value: 35,
-        step: 1
-      },
-      stocks: {
-        name: 'Stocks',
-        constant: -76.11,
-        min: -7,
-        max: 3,
-        value: 3,
-        step: 0.05
-      },
-      reer: {
-        name: 'REER',
-        constant:-42.83,
-        min: 28,
-        max: 113,
-        value: 89,
-        step: 1
-      },
-      rpdi: {
-        name: 'RPDI',
-        constant: -42.55,
-        min: 10,
-        max: 53,
-        value: 38,
-        step: 1
-      }
-    }),
-    soap: new Comodity({
-      name: 'Bar of Soap',
-      desc: 'Retail price of a bar of Soap',
-      key: 'soap',
-      coefficient: -1417.56,
-      importersULC: {
-        name: 'TW Importers ULC',
-      	constant: 2.13,
-      	min: 77,
-      	max: 137,
-      	value: 86,
-      	step: 1
-      },
-      population: {
-        name: 'Population',
-        constant: 8.84,
+        constant: 252.9397405,
         min: 113,
         max: 166,
         value: 113,
@@ -345,7 +133,7 @@
       },
       openness: {
         name: 'Openness',
-        constant: 7.23,
+        constant: 0.10035023,
         min: 2,
         max: 5,
         value: 5,
@@ -353,23 +141,23 @@
       },
       tradeFXRating: {
         name: 'Trade FX Rating',
-        constant: 22.94,
+        constant: -2.185253424,
         min: 3,
         max: 5,
-        value: 5,
+        value: 4.9,
         step: 0.1
       },
       outputGap: {
         name: 'Output Gap',
-        constant: 1.27,
+        constant: -0.914166375,
         min: -71,
         max: -3,
-        value: -3,
+        value: -3.27,
         step: 1
       },
       ownTFP: {
         name: 'Own TFP',
-        constant: -0.43,
+        constant: 0,
         min: -1,
         max: 38,
         value: 3,
@@ -377,15 +165,15 @@
       },
       ownULC: {
         name: 'Own ULC',
-        constant: -2.24,
+        constant: -0.237135505,
         min: 29,
         max: 182,
-        value: 122,
+        value: 121,
         step: 1
       },
       oil: {
         name: 'Oil',
-        constant: 0.40,
+        constant: 0,
         min: 13,
         max: 111,
         value: 20,
@@ -393,7 +181,7 @@
       },
       lcpi: {
         name: 'LCPI',
-        constant: -0.04,
+        constant: 0,
         min: 35,
         max: 179,
         value: 35,
@@ -401,7 +189,7 @@
       },
       stocks: {
         name: 'Stocks',
-        constant: -0.04,
+        constant: 0,
         min: -7,
         max: 3,
         value: 3,
@@ -409,7 +197,7 @@
       },
       reer: {
         name: 'REER',
-        constant: 3.09,
+        constant: 0.025800878,
         min: 28,
         max: 113,
         value: 89,
@@ -417,37 +205,45 @@
       },
       rpdi: {
         name: 'RPDI',
-        constant: 3.18,
+        constant: -0.32564611,
         min: 10,
         max: 53,
         value: 38,
         step: 1
-      }
-    }),
-    shoe: new Comodity({
-      name: 'Shoes',
-      desc: 'Retail price of a pair of Shoes',
-      key: 'shoe',
-      coefficient: 394384.03,
+      },
+      tarrif: {
+        name: 'Tariff',
+        constant: 0.224664878,
+        min: 55,
+        max: 114,
+        value: 55,
+        step: 1
+    }
+  }),
+  water: new Comodity({
+      name: 'Bottled Water',
+      desc: 'Retail price of Bottled Water',
+      key: 'water',
+      coefficient: -7.959606598,
       importersULC: {
         name: 'TW Importers ULC',
-      	constant: -228.40,
-      	min: 77,
-      	max: 137,
-      	value: 86,
-      	step: 1
+        constant: -4.1881714,
+        min: 77,
+        max: 137,
+        value: 86,
+        step: 1
       },
       population: {
         name: 'Population',
-        constant:-2394.73,
+        constant: 320.6022513,
         min: 113,
         max: 166,
-        value: 112,
+        value: 113,
         step: 1
       },
       openness: {
         name: 'Openness',
-        constant: -2492.31,
+        constant: -0.295210486,
         min: 2,
         max: 5,
         value: 5,
@@ -455,23 +251,23 @@
       },
       tradeFXRating: {
         name: 'Trade FX Rating',
-        constant: -3690.06,
+        constant: -1.594987639,
         min: 3,
         max: 5,
-        value: 5,
+        value: 4.9,
         step: 0.1
       },
       outputGap: {
         name: 'Output Gap',
-        constant: -594.05,
+        constant: -1.430093049,
         min: -71,
         max: -3,
-        value: -3,
+        value: -3.27,
         step: 1
       },
       ownTFP: {
         name: 'Own TFP',
-        constant: -93.82,
+        constant: 0,
         min: -1,
         max: 38,
         value: 3,
@@ -479,15 +275,15 @@
       },
       ownULC: {
         name: 'Own ULC',
-        constant: 934.14,
+        constant: 3.000202843,
         min: 29,
         max: 182,
-        value: 122,
+        value: 121,
         step: 1
       },
       oil: {
         name: 'Oil',
-        constant: -340.63,
+        constant: 0,
         min: 13,
         max: 111,
         value: 20,
@@ -495,7 +291,7 @@
       },
       lcpi: {
         name: 'LCPI',
-        constant: -111.64,
+        constant: 0,
         min: 35,
         max: 179,
         value: 35,
@@ -503,7 +299,7 @@
       },
       stocks: {
         name: 'Stocks',
-        constant: -4209.32,
+        constant: 0,
         min: -7,
         max: 3,
         value: 3,
@@ -511,7 +307,7 @@
       },
       reer: {
         name: 'REER',
-        constant:-1706.67,
+        constant: -3.908023569,
         min: 28,
         max: 113,
         value: 89,
@@ -519,10 +315,240 @@
       },
       rpdi: {
         name: 'RPDI',
-        constant: -90.95,
+        constant: -0.634615455,
         min: 10,
         max: 53,
         value: 38,
+        step: 1
+      },
+      tarrif: {
+        name: 'Tarifff',
+        constant: 1.657207335,
+        min: 40,
+        max: 600,
+        value: 40,
+        step: 1
+    }
+    }),
+    soap: new Comodity({
+      name: 'Bar of Soap',
+      desc: 'Retail price of a bar of Soap',
+      key: 'soap',
+      coefficient: -2.396504376,
+      importersULC: {
+        name: 'TW Importers ULC',
+        constant: -4.069767442,
+        min: 77,
+        max: 137,
+        value: 86,
+        step: 1
+      },
+      population: {
+        name: 'Population',
+        constant: 105.5577732,
+        min: 113,
+        max: 166,
+        value: 113,
+        step: 1
+      },
+      openness: {
+        name: 'Openness',
+        constant: 0.628442564,
+        min: 2,
+        max: 5,
+        value: 5,
+        step: 0.05
+      },
+      tradeFXRating: {
+        name: 'Trade FX Rating',
+        constant: -0.103716757,
+        min: 3,
+        max: 5,
+        value: 4.9,
+        step: 0.1
+      },
+      outputGap: {
+        name: 'Output Gap',
+        constant: 0,
+        min: -71,
+        max: -3,
+        value: -3.27,
+        step: 1
+      },
+      ownTFP: {
+        name: 'Own TFP',
+        constant: 0,
+        min: -1,
+        max: 38,
+        value: 3,
+        step: 1
+      },
+      ownULC: {
+        name: 'Own ULC',
+        constant: -0.958482212,
+        min: 29,
+        max: 182,
+        value: 121,
+        step: 1
+      },
+      oil: {
+        name: 'Oil',
+        constant: 0,
+        min: 13,
+        max: 111,
+        value: 20,
+        step: 1
+      },
+      lcpi: {
+        name: 'LCPI',
+        constant: 0,
+        min: 35,
+        max: 179,
+        value: 35,
+        step: 1
+      },
+      stocks: {
+        name: 'Stocks',
+        constant: 0,
+        min: -7,
+        max: 3,
+        value: 3,
+        step: 0.05
+      },
+      reer: {
+        name: 'REER',
+        constant: 1.134082087,
+        min: 28,
+        max: 113,
+        value: 89,
+        step: 1
+      },
+      rpdi: {
+        name: 'RPDI',
+        constant: -0.218478876,
+        min: 10,
+        max: 53,
+        value: 38,
+        step: 1
+      },
+      tarrif: {
+        name: 'Tariff',
+        constant: 0.433568897,
+        min: 29,
+        max: 150,
+        value: 29,
+        step: 1
+      }
+    }),
+
+
+    shoe: new Comodity({
+      name: 'Shoes',
+      desc: 'Retail price of a pair of Shoes',
+      key: 'shoe',
+      coefficient: 9.673624784,
+      importersULC: {
+        name: 'TW Importers ULC',
+        constant: 1.292327552,
+        min: 77,
+        max: 137,
+        value: 86,
+        step: 1
+      },
+      population: {
+        name: 'Population',
+        constant: -381.0998776,
+        min: 113,
+        max: 166,
+        value: 113,
+        step: 1
+      },
+      openness: {
+        name: 'Openness',
+        constant: -0.023962603,
+        min: 2,
+        max: 5,
+        value: 5,
+        step: 0.05
+      },
+      tradeFXRating: {
+        name: 'Trade FX Rating',
+        constant: 0.337861459,
+        min: 3,
+        max: 5,
+        value: 4.9,
+        step: 0.1
+      },
+      outputGap: {
+        name: 'Output Gap',
+        constant: 0.723045297,
+        min: -71,
+        max: -3,
+        value: -3.27,
+        step: 1
+      },
+      ownTFP: {
+        name: 'Own TFP',
+        constant: 0,
+        min: -1,
+        max: 38,
+        value: 3,
+        step: 1
+      },
+      ownULC: {
+        name: 'Own ULC',
+        constant: 0.276391195,
+        min: 29,
+        max: 182,
+        value: 121,
+        step: 1
+      },
+      oil: {
+        name: 'Oil',
+        constant: 0,
+        min: 13,
+        max: 111,
+        value: 20,
+        step: 1
+      },
+      lcpi: {
+        name: 'LCPI',
+        constant: 0,
+        min: 35,
+        max: 179,
+        value: 35,
+        step: 1
+      },
+      stocks: {
+        name: 'Stocks',
+        constant: 0,
+        min: -7,
+        max: 3,
+        value: 3,
+        step: 0.05
+      },
+      reer: {
+        name: 'REER',
+        constant: -0.454776857,
+        min: 28,
+        max: 113,
+        value: 89,
+        step: 1
+      },
+      rpdi: {
+        name: 'RPDI',
+        constant: 0.121120519,
+        min: 10,
+        max: 53,
+        value: 38,
+        step: 1
+      },
+      tarrif: {
+        name: 'Tariff',
+        constant: -0.058180338,
+        min: 15,
+        max: 45,
+        value: 15,
         step: 1
       }
     })
