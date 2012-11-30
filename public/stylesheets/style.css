@@ -69,7 +69,7 @@ header nav li a:hover:after, .active:after {
 header nav .home {
   background-image: url(/assets/images/home.png);
 }
-header nav .home:hover, header nav .analyse.active {
+header nav .home:hover, header nav .home.active {
   background-image: url(/assets/images/home_mono.png);
 }
 header nav .analyse {
