@@ -16,3 +16,4 @@ eclipse
 server.pid
 project/plugins.sbt
 project/target
+.gitignore
