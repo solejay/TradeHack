@@ -122,14 +122,16 @@
 
       <nav>
         <ul>
+          <li><a href="#home" class="home">home</a></li>
           <li><a href="#voodoo" class="voodoo">voodoo</a></li>
-          <li><a href="#analyse" class="analyse">methodology</a></li>
-          <li><a href="#docs" class="docs">docs</a></li>
+          <li><a href="#methodology" class="analyse">methodology</a></li>
+          <!-- <li><a href="#docs" class="docs">docs</a></li> -->
           <li><a href="#about" class="about">about</a></li>
         </ul>
       </nav>
     </div>
   </header>
+  <section id="home"></section>
 
   <!-- [Banner] -->
   <section class="banner">
@@ -352,22 +354,35 @@
 
     </section>
 
-    <section class="methodology">
-
+    <section id="methodology" class="row">
+      <div class="container">
+        <div class="article span9 pull-right">
+          <div>
+            <h1>Methodology</h1>
+            <img src="/assets/images/tools.jpg" alt="">
+            <p>A log-first difference regression approach was used to arrive at the final equation due to the abnormally high adjusted R-squared (which is indicative of spurious regression) seen  in the initial regression result.</p>
+            <p>The log-first difference regression technique helped reduce the effect of non-stationarity and multicolinearity in the final regression result.</p>
+            <p>Incompleteness of the tariff dataset per product posed a great challenge that was resolved by interpolating to complete the data set.</p>
+            <p>The final regression result showed that population is the most significant factor affecting the prices of the commodities under review.</p>
+            <p>Copyright for all data used to the best of our knowledge belongs solely to the Economist Intelligent Unit www.eiu.com.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="docs">
+    <!-- <section class="docs">
 
-    </section>
+    </section> -->
 
     <section id="about" class="row">
       <div class="container">
         <div class="article span9 pull-right">
           <div>
             <h1>About</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam veritatis perferendis error voluptate odit provident dolorem ducimus nihil delectus temporibus sequi cumque libero fugit rerum aliquid nisi repudiandae cupiditate molestias.</p>
+            <img src="/assets/images/trader.jpg" alt="">
+            <p>TrdHckr (pronounced Trade Hacker) is a tool developed as part of the DFID/CCHub Trade Hack designed to help analysts, policy makers and the general public understand how trade factors affect the retail prices of every day goods.</p>
+            <p>At the heart of TrdHckr are various algorithms that help us estimate the final prices of goods based on the rise (or fall) of certain factors. Not all factors affect prices in the same way; in fact, not all factors affect prices at all.</p>
+            <p>At the moment, TrdHckr is focused on prices in Nigeria, but its lessons can be applied any where in the world. So go ahead, explore, learn and hack the trade. It was always yours in the first place.</p>
           </div>
         </div>
       </div>
@@ -404,6 +419,7 @@
         var targetElement = $(this).attr('href'),
             targetElementOffset = $(targetElement).offset().top - $('header').height() - 40
 
+        $("nav a, nav li").removeClass("active")
         $(this).addClass('active')
 
         $('html,body').animate({scrollTop: targetElementOffset}, 700)

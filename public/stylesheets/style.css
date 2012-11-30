@@ -66,6 +66,12 @@ header nav li a:hover:after, .active:after {
   border-top-color: #b90025;
   border-width: 10px 10px 0;
 }
+header nav .home {
+  background-image: url(/assets/images/home.png);
+}
+header nav .home:hover, header nav .analyse.active {
+  background-image: url(/assets/images/home_mono.png);
+}
 header nav .analyse {
   background-image: url(/assets/images/analyse.png);
 }
@@ -172,8 +178,8 @@ header nav .api:hover, header nav .api.active {
 
 .infographics, .article {
   background: white;
-  min-height: 600px;
-  padding-top: 30px;
+  min-height: 300px;
+  padding: 30px 0 30px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -185,6 +191,14 @@ header nav .api:hover, header nav .api.active {
   font-size: 1.2em;
   line-height: 1.6em;
   margin-bottom: 15px;
+}
+.article h1 {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e2e2;
+}
+.article img {
+  margin-bottom: 10px;
 }
 
 .slider {
