@@ -252,3 +252,11 @@ header nav .api:hover, header nav .api.active {
   text-shadow: 0 2px rgba(0, 0, 0, 0.6);
 }
 
+.prog-sponsors {
+  text-align: right;
+  margin-top: 20px;
+}
+.prog-sponsors img {
+  margin-left: 10px;
+}
+
