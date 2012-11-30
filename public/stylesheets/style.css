@@ -69,7 +69,7 @@ header nav li a:hover:after, .active:after {
 header nav .home {
   background-image: url(/assets/images/home.png);
 }
-header nav .home:hover, header nav .analyse.active {
+header nav .home:hover, header nav .home.active {
   background-image: url(/assets/images/home_mono.png);
 }
 header nav .analyse {
@@ -250,5 +250,13 @@ header nav .api:hover, header nav .api.active {
   font-weight: bold;
   padding-top: 35px;
   text-shadow: 0 2px rgba(0, 0, 0, 0.6);
+}
+
+.prog-sponsors {
+  text-align: right;
+  margin-top: 20px;
+}
+.prog-sponsors img {
+  margin-left: 10px;
 }
 
